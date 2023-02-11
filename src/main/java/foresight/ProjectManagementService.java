@@ -293,11 +293,9 @@ public class ProjectManagementService
     }
 
 
-    public String getProjectHierarchy()
+    public List<Item> getProjectHierarchy()
     {
-        List<Item> itemsList = itemsRepository.findAll();
-        return gson.toJson(itemsList);
-
+        return itemsRepository.findAll();
     }
 
 //    public void addItems(List<Item> items)

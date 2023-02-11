@@ -3,6 +3,8 @@ package foresight;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/project")
 public class ProjectManagementController
@@ -73,7 +75,7 @@ public class ProjectManagementController
     }
 
     @GetMapping("/getProjectHierarchy/")
-    public String getProjectHierarchy()
+    public List<Item> getProjectHierarchy()
     {
         return projectManagementService.getProjectHierarchy();
     }
