@@ -151,11 +151,10 @@ public class ProjectManagementService
         }
 
         Item item = new Item(uid, name, type, startLocalDate, endLocalDate, parentUid);
+        List<Item> itemsList = itemsRepository.findAll();
 
         if (type.equals(ITEM_TYPE_PROJECT))
         {
-            List<Item> itemsList = itemsRepository.findAll();
-
             long numChildTasks = getNumTasksAllChilds(item, itemsList);
             if (numChildTasks == 0)
             {
@@ -167,7 +166,11 @@ public class ProjectManagementService
 
         System.out.println("add new item:" + item);
 
-        itemsRepository.save(item);
+        itemsList.add(item);
+
+        calculateStartEndDatesForProjectItems(itemsList);
+
+        itemsRepository.saveAll(itemsList);
     }
 
     private long getNumTasksAllChilds(Item item, List<Item> itemsList)
@@ -205,6 +208,12 @@ public class ProjectManagementService
         {
             deleteProjectItem(item);
         }
+
+        List<Item> itemsList = itemsRepository.findAll();
+
+        calculateStartEndDatesForProjectItems(itemsList);
+
+        itemsRepository.saveAll(itemsList);
     }
 
     public void deleteTaskItem(Item item) throws Exception
